@@ -1,0 +1,13 @@
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #f1f1f1;
+}
+
+form {
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+}
