@@ -18,5 +18,10 @@ function makeRandColor() {
   const g = Math.floor(Math.random() * 255);
   const b = Math.floor(Math.random() * 255);
   const newcolor = `rgb(${r}, ${g}, ${b})`;
+  if (r + g + b < 300) {
+    h1.style.color = 'white';
+  } else {
+    h1.style.color = 'black';
+  }
   return newcolor;
 }
