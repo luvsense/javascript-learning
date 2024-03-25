@@ -1,6 +1,8 @@
-const randomNumber = Math.floor(Math.random() * 100) + 1;
+// Generates Random Number
+let randomNumber = Math.floor(Math.random() * 100 + 1);
 console.log(randomNumber);
 
+// selecting necessary elements and holding them in a variable
 const submit = document.querySelector('#subt');
 const userInput = document.querySelector('#guessField');
 const guessSlot = document.querySelector('.guesses');
@@ -8,71 +10,87 @@ const remaining = document.querySelector('.lastResult');
 const lowOrHi = document.querySelector('.lowOrHi');
 const startOver = document.querySelector('.resultParas');
 
+// creates a paragraph element
 const p = document.createElement('p');
 
-let prevGuess = [];
-let numGuess = 1;
-let playGame = true;
+let prevGuess = []; // holds all the previous guesses made
+let numGuess = 1; //
+let playGame = true; // the game will end if this gets false, initially set as true.
 
+// conditional to check if user can play the game or not
 if (playGame) {
   submit.addEventListener('click', function (e) {
-    e.preventDefault();
-    const guess = parseInt(userInput.value);
+    e.preventDefault(); // Clears the field of any default values
+    const guess = parseInt(userInput.value); // stores the value and converts it to an Int
     console.log(guess);
-    validateGuess(guess);
+    validateGuess(guess); // pass the value in guess to get checked for validation
   });
 }
 
+// Check if the number entered is valid to play the game or not
 function validateGuess(guess) {
-  //
   if (isNaN(guess)) {
-    alert('Enter a valid number');
+    alert('please enter a valid number');
   } else if (guess < 1) {
-    alert('Enter a number bigger than 1');
+    alert('Please enter a larger number');
   } else if (guess > 100) {
-    alert('Enter a number less than 100');
+    alert('please enter a smaller number');
   } else {
     prevGuess.push(guess);
     if (numGuess === 11) {
-      displayGuess(guess);
+      displayGuess();
       displayMessage(`Game Over. Random number was ${randomNumber}`);
       endGame();
     } else {
-      displayGuess(prevGuess);
+      displayGuess(guess);
       checkGuess(guess);
     }
   }
 }
 
-function checkGuess() {
-  //
+// check the guess is equal/low/hi
+function checkGuess(guess) {
   if (guess === randomNumber) {
-    displayMessage(`You guesses it right!`);
+    displayMessage(`You guessed it right`);
     endGame();
   } else if (guess < randomNumber) {
-    displayMessage(`Number was too low!`);
+    displayMessage(`Number is too low`);
   } else if (guess > randomNumber) {
-    displayMessage(`Number was too high!`);
+    displayMessage(`Number is too high`);
   }
 }
 
-function displayGuess(guess) {
-  //
-  userInput.value = '';
-  guessSlot.innerHTML += `${guess} `;
-  numGuess++;
-  remaining.innerHTML = `${12 - numGuess}`;
-}
-
 function displayMessage(message) {
-  //
   lowOrHi.innerHTML = `<h2>${message}</h2>`;
 }
 
-function newGame() {
-  //
+function displayGuess(guess) {
+  userInput.value = '';
+  guessSlot.innerHTML += `${guess} `;
+  numGuess++;
+  remaining.innerHTML = `${11 - numGuess}`;
 }
 
-function endGame() {
-  //
+function newGame() {
+  const newGameBtn = document.querySelector('#newGame');
+  newGameBtn.addEventListener('click', function (e) {
+    randomNumber = Math.floor(Math.random() * 100 + 1);
+    prevGuess = [];
+    numGuess = 1;
+    guessSlot.innerHTML = '';
+    remaining.innerHTML = `${11 - numGuess}`;
+    userInput.removeAttribute('disabled');
+    startOver.removeChild(p);
+    playGame = true;
+  });
+}
+
+function endGame(numGuess) {
+  userInput.value = '';
+  userInput.setAttribute('disabled', '');
+  p.classList.add('button');
+  p.innerHTML = `<h2 id='newGame'>Start New Game</h2>`;
+  startOver.appendChild(p);
+  playGame = false;
+  newGame();
 }
