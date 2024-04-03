@@ -1,9 +1,9 @@
 const sayName = function () {
-  console.log('My name is yash');
+  console.log("My name is yash");
 };
 
 const changeText = function () {
-  document.querySelector('h1').innerHTML = 'Best JS Series';
+  document.querySelector("h1").innerHTML = "Best JS Series";
 };
 
 setTimeout(changeText, 2000);
