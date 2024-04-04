@@ -1,10 +1,9 @@
-const sayName = function () {
-  console.log("My name is yash");
-};
+console.log('sending request to server');
+setTimeout(() => {
+  console.log('Here is your data from the server');
+}, 3000);
 
-const changeText = function () {
-  document.querySelector("h1").innerHTML = "Best JS Series";
-};
-
-setTimeout(changeText, 2000);
-setTimeout(sayName, 2000);
+// If javascript is single threaded it should
+// not be to run this line until the above line
+// is finished
+console.log('I am at the end of the file');
